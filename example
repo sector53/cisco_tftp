@@ -1,0 +1,22 @@
+from netmiko import ConnectHandler
+from getpass import getpass
+
+nat = {
+    'device_type': 'cisco_ios_ssh',
+    'ip':          '192.168.1.100',
+    'username':    'admin',
+    'password':    'cisco123',
+    'port': 22
+}
+
+tftp_server = ('192.168.1.6')
+conf_name = ('')
+
+net_connect = ConnectHandler(**nat)
+cmd1 = "copy running-config tftp:"
+result = net_connect.send_command_timing(cmd1)
+if 'Address or name of remote host' in result:
+    result += net_connect.send_command_timing(tftp_server)
+if 'Destination filename' in result: 
+# switch back to send_command() here as this might be slow
+    result += net_connect.send_command(conf_name)
