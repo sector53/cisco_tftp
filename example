@@ -3,7 +3,7 @@ from getpass import getpass
 
 password = getpass()
 
-nat = {
+router1 = {
     'device_type': 'cisco_ios_ssh',
     'ip':          '192.168.1.100',
     'username':    'admin',
@@ -14,7 +14,7 @@ nat = {
 tftp_server = ('192.168.1.6')
 conf_name = ('')
 
-net_connect = ConnectHandler(**nat)
+net_connect = ConnectHandler(**router1)
 cmd1 = "copy running-config tftp:"
 result = net_connect.send_command_timing(cmd1)
 if 'Address or name of remote host' in result:
